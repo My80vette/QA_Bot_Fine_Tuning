@@ -1,5 +1,5 @@
 import streamlit as st
-
+from bot import generate_response
 
 # Set page config
 st.set_page_config(page_title="Internal Policy Q/A Chatbot", layout="centered")
@@ -36,7 +36,7 @@ if st.button("Send"):
         # Add user message to chat history
         st.session_state.chat_history.append({"role": "user", "content": user_input})
         # Placeholder bot response (replace with actual model call)
-        bot_response = "This is a placeholder response. (Integrate your model here.)"
+        bot_response = generate_response(user_input)
         st.session_state.chat_history.append({"role": "bot", "content": bot_response})
         st.session_state.user_input = ""  # Clear input box
         st.rerun()
