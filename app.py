@@ -27,16 +27,13 @@ for entry in st.session_state.chat_history:
     else:
         st.markdown(f"**Bot:** {entry['content']}")
 
-# Input box for user message
-user_input = st.text_input("Type your question here...", key="user_input")
-
-# Send button
-if st.button("Send"):
-    if user_input.strip():
-        # Add user message to chat history
+# Use a form with clear_on_submit=True to automatically clear the input after submission
+with st.form(key="message_form", clear_on_submit=True):
+    user_input = st.text_input("Type your question here...", key="user_input")
+    submit_button = st.form_submit_button("Send")
+    
+    if submit_button and user_input.strip():
         st.session_state.chat_history.append({"role": "user", "content": user_input})
-        # Placeholder bot response (replace with actual model call)
         bot_response = generate_response(user_input)
         st.session_state.chat_history.append({"role": "bot", "content": bot_response})
-        st.session_state.user_input = ""  # Clear input box
         st.rerun()
